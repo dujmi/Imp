@@ -6,7 +6,8 @@ load_season_odds <- function(id, name) {
             sprintf(
                 "https://www.football-data.co.uk/mmz4281/%d%d/%s.csv",
                 season, season + 1, id
-            )
+            ),
+            lazy = TRUE
         )
     ) |>
         tidytable::select(Date, Time, HomeTeam, AwayTeam, AvgCH, AvgCD, AvgCA) |>
