@@ -10,12 +10,12 @@ load_season_odds <- function(id, name) {
             lazy = TRUE
         )
     ) |>
-        tidytable::select(Date, Time, HomeTeam, AwayTeam, AvgCH, AvgCD, AvgCA) |>
+        tidytable::select(Date, Time, HomeTeam, AwayTeam, AvgCH, AvgCD, AvgCA, FTR) |>
         tidytable::drop_na() |>
         tidytable::mutate(
             Comp = name,
             Season = season,
-            Datetime = lubridate::dmy_hms(paste(Date, Time)),
+            Datetime = lubridate::dmy_hms(paste(Date, Time))
         ) |>
         tidytable::arrange(desc(Datetime)) |>
         tidytable::select(-Date, -Time) |>

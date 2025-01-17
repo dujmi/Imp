@@ -9,7 +9,7 @@ get_no_vig_probs <- function(odds) {
             d_nv = d_vig / total_vig,
             a_nv = a_vig / total_vig
         ) |>
-        tidytable::select(datetime, comp, season, home_team, away_team, h_nv, d_nv, a_nv)
+        tidytable::select(datetime, comp, season, home_team, away_team, h_nv, d_nv, a_nv, ftr)
 
     home_probs <- probs_grouped |>
         tidytable::rename(
@@ -18,15 +18,29 @@ get_no_vig_probs <- function(odds) {
             draw = d_nv,
             loss = a_nv
         ) |>
-        tidytable::select(-away_team)
+        tidytable::mutate(
+            result = tidytable::case_when(
+                ftr == "H" ~ 3,
+                ftr == "D" ~ 1,
+                ftr == "A" ~ 0
+            )
+        ) |>
+        tidytable::select(-away_team, -ftr)
     away_probs <- probs_grouped |>
         tidytable::rename(
             team = away_team,
             win = a_nv,
             draw = d_nv,
             loss = h_nv
+       ) |>
+        tidytable::mutate(
+            result = tidytable::case_when(
+                ftr == "A" ~ 3,
+                ftr == "D" ~ 1,
+                ftr == "H" ~ 0
+            )
         ) |>
-        tidytable::select(-home_team)
+        tidytable::select(-home_team, -ftr)
     probs <- tidytable::bind_rows(list(home_probs, away_probs))
 
     return (probs)
