@@ -17,9 +17,13 @@ for (league in leagues) {
         ) |>
         tidytable::group_by(team) |>
         tidytable::summarise(
-            expected = sum(exp)
+            expected_points = sum(exp),
+            points = sum(result)
         ) |>
-        tidytable::ungroup()
+        tidytable::ungroup() |>
+        tidytable::mutate(
+            points_diff = points - expected_points
+        )
 
     points <- actual_points |>
         tidytable::left_join(expected_points)
@@ -29,4 +33,11 @@ for (league in leagues) {
     file_name <- janitor::make_clean_names(league$name)
     write.csv(standings, paste0("data/", file_name, ".csv"))
     saveRDS(standings, paste0("data/", file_name, ".rds"))
+
+    teams <- length(unique(standings$team))
+    standings <- standings |>
+          tidytable::mutate_rowwise(
+            cl = sum(tidytable::c_across(2:4)),
+            rel = sum(tidytable::c_across((teams - 1):(teams + 1)))
+        )
 }
