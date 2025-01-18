@@ -3,8 +3,9 @@ source("R/load_season_odds.R")
 source("R/get_monte_carlo_dist.R")
 source("R/get_no_vig_probs.R")
 source("R/get_points_prob.R")
+source("R/get_team_mappings.R")
 
-for (league in leagues) {
+for (league in leagues[1:1]) {
     odds <- load_season_odds(league$id, league$name)
     probs <- get_no_vig_probs(odds)
 
@@ -36,8 +37,13 @@ for (league in leagues) {
 
     teams <- length(unique(standings$team))
     standings <- standings |>
-          tidytable::mutate_rowwise(
+        tidytable::mutate_rowwise(
             cl = sum(tidytable::c_across(2:4)),
             rel = sum(tidytable::c_across((teams - 1):(teams + 1)))
-        )
+        ) |>
+        tidytable::select(team, "1", cl, rel, points_diff, expected_points)
+
+    if (league$figure == TRUE) {
+        standings <- get_team_mappings(standings)
+    }
 }
