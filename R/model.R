@@ -4,9 +4,12 @@ source("R/get_monte_carlo_dist.R")
 source("R/get_no_vig_probs.R")
 source("R/get_points_prob.R")
 source("R/get_team_mappings.R")
+source("R/get_standings_figure.R")
 
 for (league in leagues[1:1]) {
     odds <- load_season_odds(league$id, league$name)
+    last_game <- paste0(odds$home_team[1], " - ", odds$away_team[1])
+
     probs <- get_no_vig_probs(odds)
 
     standings <- get_monte_carlo_dist(probs, n = 10)
@@ -40,10 +43,23 @@ for (league in leagues[1:1]) {
         tidytable::mutate_rowwise(
             cl = sum(tidytable::c_across(2:4)),
             rel = sum(tidytable::c_across((teams - 1):(teams + 1)))
-        ) |>
-        tidytable::select(team, "1", cl, rel, points_diff, expected_points)
+        )
 
     if (league$figure == TRUE) {
-        standings <- get_team_mappings(standings)
+        standings <- get_team_mappings(standings) |>
+            tidytable::mutate(
+                espn_logo = paste0("https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/", espn_id, ".png&h=200&w=200")
+            ) |>
+            tidytable::select(espn_logo, team_short, "1", cl, rel, actual_points_prob, points_diff, expected_points) |>
+            tidytable::arrange(desc(expected_points))
+
+        figure <- get_standings_figure(standings, last_game) |>
+            gtUtils::gt_save_crop(
+                file = paste0("figures/", file_name, ".png"),
+                bg = "#FFFFFF",
+                whitespace = 40,
+                zoom = 2,
+                expand = 5
+            )
     }
 }
