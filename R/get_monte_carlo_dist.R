@@ -1,4 +1,4 @@
-get_monte_carlo_dist <- function(probs, n = 100) {
+get_monte_carlo_dist <- function(probs, n = 10000) {
     results <- tidytable::tidytable(
         team = character(0),
         position = integer(0)
@@ -6,15 +6,18 @@ get_monte_carlo_dist <- function(probs, n = 100) {
 
     for (i in seq_len(n)) {
         outcomes <- probs |>
-            tidytable::rowwise() |>
             tidytable::mutate(
-                result = sample(
-                    c("win", "draw", "loss"),
-                    size = 1,
-                    prob = c(win, draw, loss)
+                result = tidytable::pmap_chr(
+                    list(win = win, draw = draw, loss = loss),
+                    function(win, draw, loss) {
+                        sample(
+                            c("win", "draw", "loss"), 
+                            size = 1, 
+                            prob = c(win, draw, loss)
+                        )
+                    }
                 )
-            ) |>
-            tidytable::ungroup()
+            )
 
         team_results <- outcomes |>
             tidytable::group_by(team) |>
