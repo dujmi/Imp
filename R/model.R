@@ -6,13 +6,13 @@ source("R/get_points_prob.R")
 source("R/get_team_mappings.R")
 source("R/get_standings_figure.R")
 
-for (league in leagues[1:1]) {
+for (league in leagues) {
     odds <- load_season_odds(league$id, league$name)
     last_game <- paste0(odds$home_team[1], " - ", odds$away_team[1])
 
     probs <- get_no_vig_probs(odds)
 
-    standings <- get_monte_carlo_dist(probs, n = 10)
+    standings <- get_monte_carlo_dist(probs, n = 10000)
 
     actual_points <- get_points_prob(probs)
     expected_points <- probs |>
