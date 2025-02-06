@@ -7,7 +7,7 @@ leagues <- list(
     list(
         name = "La Liga",
         id = "SP1",
-        figure = FALSE
+        figure = TRUE
     ),
     list(
         name = "Serie A",

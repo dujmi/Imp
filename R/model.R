@@ -53,13 +53,14 @@ for (league in leagues) {
             tidytable::select(espn_logo, team_short, "1", cl, rel, actual_points_prob, points_diff, expected_points) |>
             tidytable::arrange(desc(expected_points))
 
-        figure <- get_standings_figure(standings, last_game) |>
-            gtUtils::gt_save_crop(
-                file = paste0("figures/", file_name, ".png"),
-                bg = "#FFFFFF",
-                whitespace = 40,
-                zoom = 2,
-                expand = 5
-            )
+        figure <- get_standings_figure(standings, last_game)
+        gtUtils::gt_save_crop(
+            figure,
+            file = paste0("figures/", file_name, ".png"),
+            bg = "#FFFFFF",
+            whitespace = 40,
+            zoom = 2,
+            expand = 5
+        )
     }
 }
