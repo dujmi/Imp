@@ -1,17 +1,29 @@
 source("R/build_leagues.R")
 source("R/load_season_odds.R")
+source("R/get_clean_xg_probs.R")
 source("R/get_monte_carlo_dist.R")
 source("R/get_no_vig_probs.R")
 source("R/get_points_prob.R")
 source("R/get_team_mappings.R")
 source("R/get_standings_figure.R")
 
+model <- "xg"
+
 for (league in leagues) {
-    odds <- load_season_odds(league$id, league$name)
-    last_game <- paste0(odds$home_team[1], " - ", odds$away_team[1])
+    if (model == "xg") {
+        xg <- worldfootballR::understat_league_match_results(league$understat, 2024) |>
+            tidytable::arrange(desc(datetime))
+        last_game <- paste0(xg$home_team[1], " - ", xg$away_team[1])
 
-    probs <- get_no_vig_probs(odds)
+        probs <- get_clean_xg_probs(xg, league$name)
+    } else if (model == "bet") {
+        odds <- load_season_odds(league$fdck, league$name)
+        last_game <- paste0(odds$home_team[1], " - ", odds$away_team[1])
 
+        probs <- get_no_vig_probs(odds)
+    } else {
+        stop("Model was not properly selected. Please put either 'xg' or 'bet'!")
+    }
     standings <- get_monte_carlo_dist(probs, n = 10000)
 
     actual_points <- get_points_prob(probs)
@@ -35,8 +47,8 @@ for (league in leagues) {
         tidytable::left_join(points)
 
     file_name <- janitor::make_clean_names(league$name)
-    write.csv(standings, paste0("data/", file_name, ".csv"))
-    saveRDS(standings, paste0("data/", file_name, ".rds"))
+    write.csv(standings, paste0("data/", model, "/", file_name, ".csv"))
+    saveRDS(standings, paste0("data/", model, "/", file_name, ".rds"))
 
     teams <- length(unique(standings$team))
     standings <- standings |>
@@ -53,10 +65,10 @@ for (league in leagues) {
             tidytable::select(espn_logo, team_short, "1", cl, rel, actual_points_prob, points_diff, expected_points) |>
             tidytable::arrange(desc(expected_points))
 
-        figure <- get_standings_figure(standings, last_game)
+        figure <- get_standings_figure(standings, last_game, model)
         gtUtils::gt_save_crop(
             figure,
-            file = paste0("figures/", file_name, ".png"),
+            file = paste0("figures/", model, "/", file_name, ".png"),
             bg = "#FFFFFF",
             whitespace = 40,
             zoom = 2,

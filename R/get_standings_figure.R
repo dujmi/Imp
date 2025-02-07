@@ -1,7 +1,17 @@
-get_standings_figure <- function(standings, last_game) {
+get_standings_figure <- function(standings, last_game, model) {
+    if (model == "xg") {
+        title <- "Simulacija očekivanih golova"
+        source_note <- paste0("understat.com | @mislavdujak | Posljednja utakmica: ", last_game)
+        footnote_explanation <- "Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije dosadašnjeg tijeka sezone s obzirom na ostvarene očekivane golove"
+    } else {
+        title <- "Procjene kladionica"
+        source_note <- paste0("football-data.co.uk | @mislavdujak | Posljednja utakmica: ", last_game)
+        footnote_explanation <- "Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije dosadašnjeg tijeka sezone s obzirom na kladioničarske kvote"
+    }
+
     figure <- gt::gt(standings) |>
-        gt::tab_header("Procjene kladionica") |>
-        gt::tab_source_note(paste0("football-data.co.uk | @mislavdujak | Posljednja utakmica: ", last_game)) |>
+        gt::tab_header(title) |>
+        gt::tab_source_note(source_note) |>
         gt::cols_label(
             espn_logo = "",
             team_short = "",
@@ -13,7 +23,7 @@ get_standings_figure <- function(standings, last_game) {
             expected_points = "xP"
         ) |>
         gt::tab_footnote(
-            footnote = "Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije dosadašnjeg tijeka sezona s obzirom na kladioničarske kvote",
+            footnote = footnote_explanation,
             locations = gt::cells_column_labels(columns = "1")
         ) |>
         gt::tab_footnote(
