@@ -12,7 +12,7 @@ Fulham,FUL,Fulham,United Kingdom,UK,London,370,#000000 ,#CC0000
 Brentford,BRE,Brentford,United Kingdom,UK,London,337,#E3030B,#FAB813
 Manchester United,MUN,Man United,United Kingdom,UK,Manchester,360,#DA291C,#FBE122
 West Ham United,WHU,West Ham,United Kingdom,UK,London,371,#7A263A,#1bb1e7
-Tottenham Hotspur,TOT,Tottenham,United Kingdom,UK,London,367,#132257,#FFFFFF
+Tottenham Hotspur,TOT,Spurs,United Kingdom,UK,London,367,#132257,#FFFFFF
 Crystal Palace,CRY,Crystal Palace,United Kingdom,UK,London,384,#1B458F,#a7a5a6
 Wolverhampton Wanderers,WOL,Wolves,United Kingdom,UK,Wolverhampton,380,#FDB913,#231F20
 Ipswich Town,IPS,Ipswich,United Kingdom,UK,Ipswich,373,#2B458C,#EE3124
@@ -39,3 +39,21 @@ Deportivo Alavés,ALA,Deportivo Alaves,Spain,ES,Vitoria-Gasteiz,96,#0761af,#009a
 Espanyol de Barcelona,ESP,Espanyol,Spain,ES,Barcelona,88,#df1116,#007fc8
 Valencia,VAL,Valencia,Spain,ES,Valencia,94,#ffdf1c,#ee3524
 Real Valladolid,VLL,Real Valladolid,Spain,ES,Valladolid,95,#921b88,#168554
+Bayern München,BMU,Bayern,Germany,DE,München,132,#dc052d,#0066b2
+Bayer 04 Leverkusen,B04,Leverkusen,Germany,DE,Leverkusen,131,#e32221,#f3e500
+Mainz 05,M05,Mainz,Germany,DE,Mainz,2950,#fd1220,#ffffff
+Eintracht Frankfurt,SGE,Frankfurt,Germany,DE,Frankfurt,125,#e1000f,#ffffff
+RB Leipzig,RBL,Leipzig,Germany,DE,Leipzig,11420,#dd013f,#0c2043
+Freiburg,SCF,Freiburg,Germany,DE,Freiburg im Breisgau,126,#000000,#ffffff
+Borussia Mönchengladbach,BMG,M'gladbach,Germany,DE,Mönchengladbach,268,#000000,#ffffff
+Wolfsburg,WOB,Wolfsburg,Germany,DE,Wolfsburg,138,#65B32E,#ffffff
+Augsburg,FCA,Augsburg,Germany,DE,Augsburg,3841, #ba3733,#46714d
+Stuttgart,VFB,Stuttgart,Germany,DE,Stuttgart,134,#E32219,#FFED00
+Borussia Dortmund,DOR,Dortmund,Germany,DE,Dortmund,124,#000000, #fde100
+Werder Bremen,SVW,Bremen,Germany,DE,Bremen,137,#rgbnull,#ffffff
+Union Berlin,FCU,Union Berlin,Germany,DE,Berlin,598,#EB1923,#FDDC02
+Hoffenheim,TSG,Hoffenheim,Germany,DE,Hoffenheim,7911,#1961B5,#FFFFFF 
+St. Pauli,STP,St. Pauli,Germany,DE,Hamburg,270,#E20613,#604734
+Heidenheim 1846,HDH,Heidenheim,Germany,DE,Heidenheim,6418,#E20613,#003B79
+Bochum 1848,BOC,Bochum,Germany,DE,Bochum,121,#005CA9,#FFFFFF
+Holstein Kiel,KSV,Kiel,Germany,DE,Kiel,7884,#005297,#E4032E

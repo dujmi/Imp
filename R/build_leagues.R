@@ -27,6 +27,6 @@ leagues <- list(
         name = "Bundesliga",
         fdck = "D1",
         understat = "Bundesliga",
-        figure = FALSE
+        figure = TRUE
     )
 )
