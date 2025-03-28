@@ -1,12 +1,12 @@
-get_standings_figure <- function(standings, last_game, model) {
-    if (model == "xg") {
+get_standings_figure <- function(standings, last_game, model, n) {
+    if (model == "xG") {
         title <- "Simulacija očekivanih golova"
         source_note <- paste0("understat.com | @mislavdujak | Posljednja utakmica: ", last_game)
-        footnote_explanation <- "Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije dosadašnjeg tijeka sezone s obzirom na ostvarene očekivane golove"
-    } else {
+        footnote_explanation <- paste0("Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije (n = ", n, ") dosadašnjeg tijeka sezone s obzirom na ostvarene očekivane golove")
+    } else if (model == "Betting odds") {
         title <- "Procjene kladionica"
         source_note <- paste0("football-data.co.uk | @mislavdujak | Posljednja utakmica: ", last_game)
-        footnote_explanation <- "Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije dosadašnjeg tijeka sezone s obzirom na kladioničarske kvote"
+        footnote_explanation <- paste0("Stupci 'Titula', 'Liga prvaka' i 'Relegacija' rezultat su Monte Carlo simulacije (n = ", n, ") dosadašnjeg tijeka sezone s obzirom na kladioničarske kvote")
     }
 
     figure <- gt::gt(standings) |>
